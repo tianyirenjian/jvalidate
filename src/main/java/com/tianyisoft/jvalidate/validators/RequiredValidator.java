@@ -9,8 +9,8 @@ public class RequiredValidator extends Validator {
     public Tuple2<Boolean, String> validate(Required required, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
         if (o == null) {
-            return new Tuple2<>(false, String.format(required.message(), fieldName));
+            return falseResult(required.message(), fieldName);
         }
-        return new Tuple2<>(true, "");
+        return trueResult();
     }
 }

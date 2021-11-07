@@ -11,4 +11,12 @@ public abstract class Validator {
         field.setAccessible(true);
         return field.get(object);
     }
+
+    public Tuple2<Boolean, String> trueResult() {
+        return new Tuple2<>(true, "");
+    }
+
+    public Tuple2<Boolean, String> falseResult(String message, Object ...params) {
+        return new Tuple2<>(false, String.format(message, params));
+    }
 }

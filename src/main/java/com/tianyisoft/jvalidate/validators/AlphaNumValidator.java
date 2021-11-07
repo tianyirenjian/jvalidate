@@ -7,9 +7,9 @@ public class AlphaNumValidator extends Validator {
     public Tuple2<Boolean, String> validate(AlphaNum alphaNum, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
         if (o == null || (o instanceof String && ((String) o).matches(getRegexp()))) {
-            return new Tuple2<>(true, "");
+            return trueResult();
         }
-        return new Tuple2<>(false, String.format(alphaNum.message(), fieldName));
+        return falseResult(alphaNum.message(), fieldName);
     }
 
     public String getRegexp() {

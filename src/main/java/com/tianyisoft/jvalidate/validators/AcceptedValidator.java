@@ -3,12 +3,21 @@ package com.tianyisoft.jvalidate.validators;
 import com.tianyisoft.jvalidate.annotations.Accepted;
 import com.tianyisoft.jvalidate.utils.Tuple2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AcceptedValidator extends Validator {
     public Tuple2<Boolean, String> validate(Accepted accepted, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
-        if (o instanceof String && (((String)o).equals("on") || ((String)o).equals("yes") || ((String)o).equals("1") || ((String)o).equals("true"))) {
-            return new Tuple2<>(true, "");
+        List<String> acceptedValues = new ArrayList<String>() {{
+            add("on");
+            add("yes");
+            add("1");
+            add("true");
+        }};
+        if (o == null || (o instanceof String && (acceptedValues.contains(o)))) {
+            return trueResult();
         }
-        return new Tuple2<>(false, String.format(accepted.message(), fieldName));
+        return falseResult(accepted.message(), fieldName);
     }
 }

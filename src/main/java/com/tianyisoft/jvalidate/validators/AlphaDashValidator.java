@@ -7,9 +7,9 @@ public class AlphaDashValidator extends Validator {
     public Tuple2<Boolean, String> validate(AlphaDash alphaDash, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
         if (o == null || (o instanceof String && ((String) o).matches(getRegexp()))) {
-            return new Tuple2<>(true, "");
+            return trueResult();
         }
-        return new Tuple2<>(false, String.format(alphaDash.message(), fieldName));
+        return falseResult(alphaDash.message(), fieldName);
     }
 
     public String getRegexp() {

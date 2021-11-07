@@ -12,7 +12,8 @@ public class User {
     @AlphaNum
     @Accepted
     private String name;
-    // @ActiveUrl
+    @Required
+    @Url
     private String homepage;
     // @AfterOrEqual(date = "1980-01-01")
     // @BeforeOrEqual(date = "2003-12-31")
