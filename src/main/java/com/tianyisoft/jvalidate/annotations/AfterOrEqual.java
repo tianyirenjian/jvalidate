@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 public @interface AfterOrEqual {
     String message() default "%s 必须是 %s 之后的日期或等于 %s";
     String date();
+    boolean withTime() default false;
 }
