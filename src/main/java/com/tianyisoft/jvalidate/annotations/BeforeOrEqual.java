@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 public @interface BeforeOrEqual {
     String message() default "%s 必须是 %s 之前的日期或等于 %s";
     String date();
+    boolean withTime() default false;
 }

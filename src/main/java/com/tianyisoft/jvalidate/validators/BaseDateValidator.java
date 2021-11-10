@@ -95,7 +95,7 @@ public class BaseDateValidator extends Validator {
                 }
             }
         }
-        return falseResult(message, fieldName, date);
+        return falseResult(message, fieldName, date, date);
     }
 
     private Boolean operatorDate(Date d1, Date d2, String operator) {

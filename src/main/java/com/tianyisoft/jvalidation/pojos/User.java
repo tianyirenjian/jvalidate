@@ -18,9 +18,10 @@ public class User {
     @Required
     @Url
     private String homepage;
-    @JsonFormat(timezone = "Europe/London")
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
+    @Before(date = "2003-12-31")
+    @BeforeOrEqual(date = "2003-12-31")
     private Date birthday;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
