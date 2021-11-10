@@ -28,9 +28,11 @@ public class User {
     private LocalDate birthday1;
     @After(date = "1980-01-01T00:00:00.000Z")
     @AfterOrEqual(date = "1980-01-01T00:00:00.000Z")
-    // @AfterOrEqual(date = "1980-01-01")
-    // @BeforeOrEqual(date = "2003-12-31")
     private Instant birthday2;
+
+    @Required
+    @BetweenDouble(min = 30.0, max = 230.0)
+    private Double weight;
 
     public Long getId() {
         return id;
@@ -80,6 +82,14 @@ public class User {
         this.birthday2 = birthday2;
     }
 
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -89,6 +99,7 @@ public class User {
                 ", birthday=" + birthday +
                 ", birthday1=" + birthday1 +
                 ", birthday2=" + birthday2 +
+                ", weight=" + weight +
                 '}';
     }
 }
