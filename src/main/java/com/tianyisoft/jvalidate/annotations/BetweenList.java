@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BetweenList {
-    String message() default "%s 长度必须在 %ld 和 %ld 之间";
+    String message() default "%s 长度必须在 %d 和 %d 之间";
     long minLength();
     long maxLength();
 }

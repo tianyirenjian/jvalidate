@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BetweenLong {
-    String message() default "%s 必须在 %ld 和 %ld 之间";
+    String message() default "%s 必须在 %d 和 %d 之间";
     long min();
     long max();
 }
