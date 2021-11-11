@@ -19,6 +19,10 @@ public class User {
     @Required
     @Url
     private String homepage;
+    @Required
+    @Email
+    @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
+    private String email;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
     @Before(date = "2003-12-31")
@@ -63,6 +67,14 @@ public class User {
 
     public void setHomepage(String homepage) {
         this.homepage = homepage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Date getBirthday() {
@@ -127,6 +139,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", homepage='" + homepage + '\'' +
+                ", email='" + email + '\'' +
                 ", birthday=" + birthday +
                 ", birthday1=" + birthday1 +
                 ", birthday2=" + birthday2 +
