@@ -6,7 +6,7 @@ import com.tianyisoft.jvalidate.utils.Tuple2;
 public class Ipv6Validator extends IpValidator {
     public Tuple2<Boolean, String> validate(Ipv6 ipv6, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
-        return validateRegexp(o, regexp(), ipv6.message(), fieldName);
+        return validateRegexp(o, regexp(), 0, ipv6.message(), fieldName);
     }
 
     @Override

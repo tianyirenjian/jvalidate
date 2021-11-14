@@ -16,7 +16,7 @@ public class IpValidator extends RegexpValidator {
         if (o instanceof String) {
             String value = (String) o;
             boolean b = Stream.of(ipv4(), ipv6()).anyMatch(regexp -> {
-                return regexpValidate(value, regexp);
+                return regexpValidate(value, regexp, 0);
             });
             if (b) return trueResult();
         }

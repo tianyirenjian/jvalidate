@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 public @interface Regexp {
     String message() default "%s 正则不匹配";
     String rule();
+    int flags() default 0;
 }

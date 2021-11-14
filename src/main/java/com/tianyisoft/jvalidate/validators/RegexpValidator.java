@@ -8,23 +8,23 @@ import java.util.regex.Pattern;
 public class RegexpValidator extends Validator {
     public Tuple2<Boolean, String> validate(Regexp regexp, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Object o = getFieldValue(klass, object, fieldName);
-        return validateRegexp(o, regexp.rule(), regexp.message(), fieldName);
+        return validateRegexp(o, regexp.rule(), regexp.flags(), regexp.message(), fieldName);
     }
 
-    protected Tuple2<Boolean, String> validateRegexp(Object o, String rule, String message, String fieldName) {
+    protected Tuple2<Boolean, String> validateRegexp(Object o, String rule, int flags, String message, String fieldName) {
         if (o == null) {
             return trueResult();
         }
         if (o instanceof String) {
-            if (regexpValidate((String) o, rule)) {
+            if (regexpValidate((String) o, rule, flags)) {
                 return trueResult();
             }
         }
         return falseResult(message, fieldName);
     }
 
-    protected Boolean regexpValidate(String text, String rule) {
-        return Pattern.compile(rule).matcher(text).matches();
+    protected Boolean regexpValidate(String text, String rule, int flags) {
+        return Pattern.compile(rule, flags).matcher(text).matches();
     }
 
     protected String regexp() {
