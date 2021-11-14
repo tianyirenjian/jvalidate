@@ -44,6 +44,11 @@ public class User {
     private Long score;
     @BetweenList(minLength = 1, maxLength = 2)
     private List<String> hobbies;
+    @Required
+    @Ip
+    @Ipv4
+    @Ipv6
+    private String ip;
 
     public Long getId() {
         return id;
@@ -133,6 +138,14 @@ public class User {
         this.hobbies = hobbies;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -147,6 +160,7 @@ public class User {
                 ", weight=" + weight +
                 ", score=" + score +
                 ", hobbies=" + hobbies +
+                ", ip='" + ip + '\'' +
                 '}';
     }
 }
