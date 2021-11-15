@@ -2,11 +2,14 @@ package com.tianyisoft.jvalidate.aops;
 
 import com.tianyisoft.jvalidate.annotations.JValidate;
 import com.tianyisoft.jvalidate.annotations.JValidated;
+import com.tianyisoft.jvalidate.annotations.NeedDatabase;
 import com.tianyisoft.jvalidate.utils.Tuple2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
@@ -17,6 +20,12 @@ import java.util.*;
 @Aspect
 @Component
 public class JDoValidate {
+    private final JdbcTemplate jdbcTemplate;
+
+    public JDoValidate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Around("@annotation(com.tianyisoft.jvalidate.annotations.JValidated)")
     public Object validate(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
@@ -49,8 +58,14 @@ public class JDoValidate {
                     try {
                         Class<?> clazz = Class.forName(annotation.annotationType().getName().replaceFirst(".annotations.", ".validators.") + "Validator");
                         Object validatorInstance = clazz.newInstance();
-                        Method method = clazz.getMethod("validate", annotation.annotationType(), Class.class, Object.class, String.class);
-                        Object result = method.invoke(validatorInstance, annotation, klass, parameter, field.getName());
+                        Object result = null;
+                        if (annotation.annotationType().isAnnotationPresent(NeedDatabase.class)) {
+                            Method method = clazz.getMethod("validate", annotation.annotationType(), JdbcTemplate.class, Class.class, Object.class, String.class);
+                            result = method.invoke(validatorInstance, annotation, jdbcTemplate, klass, parameter, field.getName());
+                        } else {
+                            Method method = clazz.getMethod("validate", annotation.annotationType(), Class.class, Object.class, String.class);
+                            result = method.invoke(validatorInstance, annotation, klass, parameter, field.getName());
+                        }
                         Tuple2<Boolean, String> tuple2 = Tuple2.castFrom(result);
                         if (!tuple2.getV0()) {
                             errorList.add(tuple2.getV1());
