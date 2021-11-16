@@ -23,7 +23,7 @@ public class User {
     @Email
     @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
     @Unique(table = "users", field = "email")
-    @Unique(table = "users", field = "email")
+    @Unique(table = "users", field = "email", excludeValue = "39")
     private String email;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")

@@ -15,8 +15,10 @@ public class UniquesValidator extends UniqueValidator {
         Arrays.stream(uniques.value()).forEach(unique -> {
             try {
                 Tuple2<Boolean, String> result = validate(unique, jdbcTemplate, klass, object, fieldName);
-                builder.append(result.getV1());
-                builder.append(",");
+                if (!result.getV0()) {
+                    builder.append(result.getV1());
+                    builder.append(",");
+                }
                 b.set(b.get() && result.getV0());
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 e.printStackTrace();
