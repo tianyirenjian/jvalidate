@@ -13,7 +13,6 @@ public class User {
     @Alpha
     @AlphaDash
     @AlphaNum
-    @Accepted
     @BetweenString(min = 6, max = 18)
     private String name;
     @Required

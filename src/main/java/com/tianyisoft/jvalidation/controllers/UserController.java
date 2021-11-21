@@ -12,7 +12,7 @@ public class UserController {
 
     @JValidated
     @PostMapping("/users")
-    public ResponseEntity<?> store(@RequestBody @JValidated User user) {
-        return ResponseEntity.ok(user);
+    public User store(@RequestBody @JValidated User user) {
+        return user;
     }
 }
