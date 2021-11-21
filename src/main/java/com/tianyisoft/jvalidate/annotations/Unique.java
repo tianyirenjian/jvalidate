@@ -14,4 +14,5 @@ public @interface Unique {
     String[] excludeKeys() default {};
     String[] excludeValues() default {};
     String where() default "";
+    Class<?>[] groups() default {};
 }

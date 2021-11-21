@@ -47,7 +47,7 @@ public class User {
     private List<String> hobbies;
     @Required
     @Ip
-    @Ipv4
+    @Ipv4(groups = Update.class)
     @Ipv6
     private String ip;
 

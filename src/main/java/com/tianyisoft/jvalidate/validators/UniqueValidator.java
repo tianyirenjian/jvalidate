@@ -10,7 +10,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UniqueValidator extends Validator {
-    public Tuple2<Boolean, String> validate(Unique unique, JdbcTemplate jdbcTemplate, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
+    public Tuple2<Boolean, String> validate(Unique unique, Class<?>[] groups, JdbcTemplate jdbcTemplate, Class<?> klass, Object object, String fieldName) throws NoSuchFieldException, IllegalAccessException {
+        if (!needValidateByGroups(groups, unique.groups())) {
+            return trueResult();
+        }
         Object o = getFieldValue(klass, object, fieldName);
         if (o == null) {
             return trueResult();
