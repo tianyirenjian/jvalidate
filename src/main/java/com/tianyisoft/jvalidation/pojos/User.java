@@ -9,7 +9,7 @@ import java.util.List;
 
 public class User {
     private Long id;
-    @Required(message = "嫑为空")
+    @Required(message = "%s 嫑为空")
     @Alpha
     @AlphaDash
     @AlphaNum
@@ -21,6 +21,8 @@ public class User {
     @Required
     @Email
     @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
+    @Unique(table = "users", field = "email")
+    @Unique(table = "users", field = "email", excludeKeys = {"id"}, excludeValues = {"39"}, where = " and id != {{id}} ")
     private String email;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
