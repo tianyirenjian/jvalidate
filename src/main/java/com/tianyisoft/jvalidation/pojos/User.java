@@ -28,6 +28,7 @@ public class User {
     @AfterOrEqual(date = "1980-01-01")
     @Before(date = "2003-12-31")
     @BeforeOrEqual(date = "2003-12-31")
+    @DateEquals(date = "1990-01-15")
     private Date birthday;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
