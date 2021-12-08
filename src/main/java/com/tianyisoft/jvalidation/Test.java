@@ -7,11 +7,9 @@ import java.time.*;
 
 public class Test {
     public static void main(String []args) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 = dateFormat.parse("1980-01-01");
-        Date d2 = dateFormat.parse("1980-01-01");
-        System.out.println(d1.after(d2));
-        System.out.println(d1.before(d2));
-        System.out.println(d1.equals(d2));
+        String a = "ss";
+        Object o = a;
+        System.out.println(o.getClass());
+        System.out.println(o.equals("ss"));
     }
 }

@@ -17,12 +17,14 @@ public class User {
     private String name;
     @Required
     @Url
+    @Different(field = "name")
     private String homepage;
     @Required
     @Email
     @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
     @Unique(table = "users", field = "email")
     @Unique(table = "users", field = "email", excludeKeys = {"id"}, excludeValues = {"39"}, where = " and id != {{id}} ")
+    @EndsWith(ends = {"com", "cc"})
     private String email;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
@@ -45,6 +47,7 @@ public class User {
     @BetweenLong(min = 0, max = 100)
     private Long score;
     @BetweenList(minLength = 1, maxLength = 2)
+    @Distinct
     private List<String> hobbies;
     @Required
     @Ip
