@@ -23,7 +23,7 @@ public class User {
     @Email
     @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
     @Unique(table = "users", field = "email")
-    @Unique(table = "users", field = "email", excludeKeys = {"id"}, excludeValues = {"39"}, where = " and id != {{id}} ")
+    @Unique(table = "users", field = "email", excludeKeys = {"id"}, excludeValues = {"39"}, where = " and id != {{ request.path.id }} ")
     @EndsWith(ends = {"com", "cc"})
     private String email;
     @After(date = "1980-01-01")

@@ -1,17 +1,26 @@
 package com.tianyisoft.jvalidation.controllers;
 
+import com.tianyisoft.jvalidate.JValidator;
 import com.tianyisoft.jvalidate.annotations.JValidated;
 import com.tianyisoft.jvalidate.utils.BindingErrors;
 import com.tianyisoft.jvalidation.pojos.Create;
 import com.tianyisoft.jvalidation.pojos.Update;
 import com.tianyisoft.jvalidation.pojos.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
 public class UserController {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @JValidated
     @PostMapping("/users")
@@ -20,5 +29,13 @@ public class UserController {
             return ResponseEntity.status(400).body(bindingErrors.getErrors());
         }
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/users/{id}")
+    public User withoutAnnotation(@RequestBody User user) {
+        Class<?>[] groups = new Class<?>[]{Create.class, Update.class};
+        Map<String, List<String>> errors = JValidator.validate(jdbcTemplate, user, groups);
+        System.out.println(errors);
+        return user;
     }
 }
