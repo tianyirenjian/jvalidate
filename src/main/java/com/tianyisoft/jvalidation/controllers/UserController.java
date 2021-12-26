@@ -23,11 +23,8 @@ public class UserController {
     private JdbcTemplate jdbcTemplate;
 
     @JValidated
-    @PostMapping("/users")
-    public ResponseEntity<?> store(@RequestBody @JValidated(groups = {Create.class, Update.class}) User user, BindingErrors bindingErrors) {
-        if (bindingErrors.hasErrors()) {
-            return ResponseEntity.status(400).body(bindingErrors.getErrors());
-        }
+    @PostMapping("/users/{id}")
+    public ResponseEntity<?> store(@RequestBody @JValidated(groups = {Create.class, Update.class}) User user) {
         return ResponseEntity.ok(user);
     }
 

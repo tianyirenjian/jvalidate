@@ -9,11 +9,12 @@ import java.util.List;
 
 public class User {
     private Long id;
+    @Bail
     @Required(message = "%s 嫑为空")
     @Alpha
     @AlphaDash
     @AlphaNum
-    @BetweenString(min = 6, max = 18)
+    @Between(min = 1, max = 3)
     private String name;
     @Required
     @Url
@@ -23,7 +24,8 @@ public class User {
     @Email
     @Regexp(rule = "^(?=.{1,64}@)[A-Za-z0-9\\+_-]+(\\.[A-Za-z0-9\\+_-]+)*@[^-][A-Za-z0-9\\+-]+(\\.[A-Za-z0-9\\+-]+)*(\\.[A-Za-z]{2,})$")
     @Unique(table = "users", field = "email")
-    @Unique(table = "users", field = "email", excludeKeys = {"id"}, excludeValues = {"39"}, where = " and id != {{ request.path.id }} ")
+    @Unique(table = "users", field = "email", where = " and id != {{ request.path.id }} ")
+    @Exists(table = "users", field = "email", where = " and id != {{ request.path.id }}")
     @EndsWith(ends = {"com", "cc"})
     private String email;
     @After(date = "1980-01-01")
@@ -39,14 +41,15 @@ public class User {
     @AfterOrEqual(date = "1980-01-01T00:00:00.000Z")
     private Instant birthday2;
 
-    @BetweenInteger(min = 8, max = 70)
+    @Between(min = 8, max = 70)
     private Integer age;
     @Required
-    @BetweenDouble(min = 30.0, max = 230.0)
+    @Between(min = 30.0, max = 230.0)
     private Double weight;
-    @BetweenLong(min = 0, max = 100)
+    @Min(0)
+    @Max(100)
     private Long score;
-    @BetweenList(minLength = 1, maxLength = 2)
+    @Between(min= 1, max= 2)
     @Distinct
     private List<String> hobbies;
     @Required
