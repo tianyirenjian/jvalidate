@@ -1,24 +1,29 @@
 package com.tianyisoft.jvalidation.pojos;
 
 import com.tianyisoft.jvalidate.annotations.*;
+import com.tianyisoft.jvalidation.conditions.UserNameCondition;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class User {
     private Long id;
-    @Bail
-    @Required(message = "%s 嫑为空")
+    @Required(message = "%s 嫑为空", allowEmpty = false)
+    @RequiredIf(allowEmpty = false, condition = UserNameCondition.class, params = {"asd", "{{ this }}", "{{ request.path.id }}", "{{ homepage }}"})
     @Alpha
     @AlphaDash
     @AlphaNum
     @Between(min = 1, max = 3)
     private String name;
+    @Bail
     @Required
     @Url
     @Different(field = "name")
+    @StartsWith(starts = {"s", "u"})
+    @EndsWith(ends = {"s", "/"})
     private String homepage;
     @Required
     @Email
@@ -27,6 +32,7 @@ public class User {
     @Unique(table = "users", field = "email", where = " and id != {{ request.path.id }} ")
     @Exists(table = "users", field = "email", where = " and id != {{ request.path.id }}")
     @EndsWith(ends = {"com", "cc"})
+    @In(values = {"aa@aa.com", "bb@bb.com"})
     private String email;
     @After(date = "1980-01-01")
     @AfterOrEqual(date = "1980-01-01")
@@ -57,6 +63,9 @@ public class User {
     @Ipv4(groups = Update.class)
     @Ipv6
     private String ip;
+    @Required
+    @Distinct
+    private String[] friends;
 
     public Long getId() {
         return id;
@@ -154,6 +163,14 @@ public class User {
         this.ip = ip;
     }
 
+    public String[] getFriends() {
+        return friends;
+    }
+
+    public void setFriends(String[] friends) {
+        this.friends = friends;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -169,6 +186,7 @@ public class User {
                 ", score=" + score +
                 ", hobbies=" + hobbies +
                 ", ip='" + ip + '\'' +
+                ", friends=" + Arrays.toString(friends) +
                 '}';
     }
 }
