@@ -10,13 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 public class User {
-    private Long id;
     @Required(message = "%s 嫑为空", allowEmpty = false)
     @RequiredIf(allowEmpty = false, condition = UserNameCondition.class, params = {"asd", "{{ this }}", "{{ request.path.id }}", "{{ homepage }}"})
     @Alpha
     @AlphaDash
     @AlphaNum
-    @Between(min = 1, max = 3)
+    @Between(min = 1, max = 3, condition = UserNameCondition.class)
     private String name;
     @Bail
     @Required
@@ -66,14 +65,6 @@ public class User {
     @Required
     @Distinct
     private String[] friends;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -174,8 +165,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", homepage='" + homepage + '\'' +
                 ", email='" + email + '\'' +
                 ", birthday=" + birthday +
