@@ -2,7 +2,6 @@ package com.tianyisoft.jvalidation.controllers;
 
 import com.tianyisoft.jvalidate.JValidator;
 import com.tianyisoft.jvalidate.annotations.JValidated;
-import com.tianyisoft.jvalidate.utils.BindingErrors;
 import com.tianyisoft.jvalidation.pojos.Create;
 import com.tianyisoft.jvalidation.pojos.Update;
 import com.tianyisoft.jvalidation.pojos.User;
@@ -22,7 +21,11 @@ public class UserController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @JValidated
+    @PostMapping("/users")
+    public ResponseEntity<?> create(@RequestBody @JValidated User user) {
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping("/users/{id}")
     public ResponseEntity<?> store(@RequestBody @JValidated(groups = {Create.class, Update.class}) User user) {
         return ResponseEntity.ok(user);
