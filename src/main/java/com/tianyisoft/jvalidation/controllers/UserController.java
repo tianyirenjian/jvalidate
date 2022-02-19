@@ -2,6 +2,7 @@ package com.tianyisoft.jvalidation.controllers;
 
 import com.tianyisoft.jvalidate.JValidator;
 import com.tianyisoft.jvalidate.annotations.JValidated;
+import com.tianyisoft.jvalidate.utils.BindingErrors;
 import com.tianyisoft.jvalidation.pojos.Create;
 import com.tianyisoft.jvalidation.pojos.Update;
 import com.tianyisoft.jvalidation.pojos.User;
@@ -35,7 +36,6 @@ public class UserController {
     public User withoutAnnotation(@RequestBody User user) {
         Class<?>[] groups = new Class<?>[]{Create.class, Update.class};
         Map<String, List<String>> errors = JValidator.validate(jdbcTemplate, user, groups);
-        System.out.println(errors);
         return user;
     }
 }

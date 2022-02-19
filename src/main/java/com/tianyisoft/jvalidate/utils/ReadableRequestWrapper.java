@@ -1,7 +1,6 @@
 package com.tianyisoft.jvalidate.utils;
 
 import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -9,18 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public class ReadableRequestWrapper extends HttpServletRequestWrapper {
-    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
-    private static final int EOF = -1;
     private final Charset encoding;
     private byte[] rawData;
 
     public ReadableRequestWrapper(HttpServletRequest request) {
         super(request);
-        String encoding = request.getCharacterEncoding();
-        this.encoding = (encoding == null || "".equals(encoding)) ? StandardCharsets.UTF_8 : Charset.forName(encoding);
+        this.encoding = Helper.getCharset(request.getCharacterEncoding());
         try {
             InputStream stream = request.getInputStream();
             this.rawData = StreamUtils.copyToByteArray(stream);

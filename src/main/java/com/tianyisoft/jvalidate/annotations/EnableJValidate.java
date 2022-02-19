@@ -2,6 +2,7 @@ package com.tianyisoft.jvalidate.annotations;
 
 import com.tianyisoft.jvalidate.configurations.BindingErrorsArgumentResolverConfiguration;
 import com.tianyisoft.jvalidate.configurations.JDoValidateInterceptorConfiguration;
+import com.tianyisoft.jvalidate.configurations.JValidationConfiguration;
 import com.tianyisoft.jvalidate.configurations.ReadableRequestFilterConfiguration;
 import com.tianyisoft.jvalidate.exceptions.ValidateFailedExceptionHandler;
 import com.tianyisoft.jvalidate.filters.ReadableRequestFilter;
@@ -20,6 +21,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({
+        JValidationConfiguration.class,
         ValidateFailedExceptionHandler.class,
         ReadableRequestFilter.class, ReadableRequestFilterConfiguration.class,
         JDoValidateInterceptor.class, JDoValidateInterceptorConfiguration.class,
